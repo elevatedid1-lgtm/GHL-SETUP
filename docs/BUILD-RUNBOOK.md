@@ -18,9 +18,8 @@ The API work is done (see `docs/00-live-account-audit.md`). This runbook covers 
 
 ## Phase 0: settings (5 min)
 
-- [ ] **Settings → Custom Fields → Ref Capture** → edit → **Query Key = `ref`** → save
-- [ ] **Settings → Custom Fields → Ref Method Capture** → **Query Key = `src`** → save
-- [ ] **Settings → Business Profile:** confirm the time zone is **America/New_York**
+- [x] **Query Keys:** current GHL has no Query Key setting in Settings → Custom Fields. Set it **inside the form builder**: select the hidden field → Query Key `ref` (Ref Capture) and `src` (Ref Method Capture).
+- [x] **Time zone:** confirmed America/New_York (2026-09-24)
 - [ ] **Calendars → Patient Credit Consult → Availability:** confirm the hours read Mon–Fri 10:00–20:00 and Sat 09:00–14:00 **Eastern**
 
 ## Phase 1: forms (Sites → Forms → Builder)
@@ -52,7 +51,9 @@ Fields, in order (★ = required):
 
 Form settings: on submit, show message "Thanks. Someone from our team will reach out shortly. Check your texts." Turn **off** any "Terms & conditions" element the builder adds by default.
 
-- [ ] Form 1 built. Form ID: `__________`
+- [ ] Form 1 built. Form ID: `RayQTbHya4kaDCc2ylYX` (partial draft; see `config/ghl-schema.json → forms`)
+
+> **Builder tips (learned the hard way):** GHL's form builder runs inside an embedded frame. Dragging freezes it for automation, so add elements with the **"+" insert buttons** and save after every 2–3 fields. The "Terms & Conditions" element was removed. **The form must not go live until the two consent checkboxes above are added back.**
 
 ### Form 2: `Rep Submit`
 | # | Element | Maps to |
