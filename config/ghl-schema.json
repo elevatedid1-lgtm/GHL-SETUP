@@ -1,0 +1,680 @@
+{
+  "_comment": "Single source of truth for the GHL build. 'existing' entries were read from the live sub-account on 2026-09-24. Field keys are immutable in GHL once created, so the typo'd keys stay and are aliased here. scripts/provision_fields.py creates anything with status 'create'.",
+  "locationId": "Evfk5CgjxNHryw79uGDD",
+  "pipelines": {
+    "partner": {
+      "id": "Vn4V6ZQy13J3h00B5uCN",
+      "name": "Partner Pipeline",
+      "stages": {
+        "prospect": "70589f6f-ddd5-490e-8780-d769371f349b",
+        "connected": "dfae2a30-a7b7-4e9f-b3e1-669061c291da",
+        "conversation": "2d06f230-28b3-4221-907d-be7024fd1aa5",
+        "intro_call_booked": "4b9168e7-5cd6-4ad5-8d2e-f279393f5f45",
+        "agreement_sent": "7efb746d-02d8-4e92-8f4d-43e0ed68a615",
+        "signed_and_trained": "c4d7bead-67d7-4183-ab91-1fc6b04bb6de",
+        "producing": "3f591242-9bb6-4484-81d1-42c9e9121e37",
+        "dormant": "b9d2aa41-15e4-48da-b83d-e6ac79002c1f"
+      }
+    },
+    "patient": {
+      "id": "J1HkoDLINqtOIovNPs46",
+      "name": "Patient Pipeline",
+      "stages": {
+        "new_referral": "2c5c4e52-447d-4538-aa3e-8c2360e7f32b",
+        "contacted": "89cd37ef-6b17-4a0d-9be7-1f79b9c91e89",
+        "consult_booked": "e9334878-138c-4a95-a760-b38317818335",
+        "consult_attended": "bf26cc23-05a4-4a60-94cb-db219f83d019",
+        "enrolled": "b3f915b1-6b29-4d93-b229-487789848cfb",
+        "nurture": "adde8982-f185-4380-8b3b-2990675d6f9e",
+        "improved_ready_to_reapply": "f243998e-d032-42db-8c8d-570061e68084",
+        "closed_no_result": "44a00089-c2d9-495b-a482-d447f509c815"
+      }
+    },
+    "reactivation": {
+      "id": "hzdbjzEqdjw9Hm3GzSsx",
+      "name": "Reactivation/ Win Back Pipeline"
+    }
+  },
+  "customFields": [
+    {
+      "group": "partner",
+      "model": "contact",
+      "key": "contact.partner_id",
+      "name": "Partner ID",
+      "dataType": "TEXT",
+      "status": "existing",
+      "id": "JMoJtejBgYSpKWnuSGFY"
+    },
+    {
+      "group": "partner",
+      "model": "contact",
+      "key": "contact.dental_office",
+      "name": "Dental Office",
+      "dataType": "TEXT",
+      "status": "existing",
+      "id": "sjPPBxXc8Zju59EHCHkw"
+    },
+    {
+      "group": "partner",
+      "model": "contact",
+      "key": "contact.job_title",
+      "name": "Job Title",
+      "dataType": "TEXT",
+      "status": "existing",
+      "id": "wc5xnX87MQYZI12nfrgw"
+    },
+    {
+      "group": "partner",
+      "model": "contact",
+      "key": "contact.partner_status",
+      "name": "Partner Status",
+      "dataType": "TEXT",
+      "status": "existing",
+      "id": "jM24CZf3NmB1PEuyijn5"
+    },
+    {
+      "group": "partner",
+      "model": "contact",
+      "key": "contact.date_signed",
+      "name": "Date Signed",
+      "dataType": "TEXT",
+      "status": "existing",
+      "id": "CjugEiLnwjGYSaPirhk4",
+      "note": "TEXT, not DATE. Date filters and 'days since' logic will not work. Recreate as DATE before first partner signs."
+    },
+    {
+      "group": "partner",
+      "model": "contact",
+      "key": "contact.last_referral_date",
+      "name": "Last Referral Date",
+      "dataType": "TEXT",
+      "status": "existing",
+      "id": "OtYSek6Y2xxbNK9PTBoP",
+      "note": "Same TEXT problem. Dormancy logic depends on this."
+    },
+    {
+      "group": "partner",
+      "model": "contact",
+      "key": "contact.total_referrals",
+      "name": "Total Referrals",
+      "dataType": "TEXT",
+      "status": "existing",
+      "id": "jAk6n71NJ8Ml4d1ekrOM",
+      "note": "TEXT cannot be incremented or sorted numerically. Recreate as NUMERICAL."
+    },
+    {
+      "group": "partner",
+      "model": "contact",
+      "key": "contact.partner_type",
+      "name": "Partner Type",
+      "dataType": "SINGLE_OPTIONS",
+      "options": [
+        "Dental Office",
+        "Financing Rep",
+        "Office Staff Member"
+      ],
+      "status": "create"
+    },
+    {
+      "group": "partner",
+      "model": "contact",
+      "key": "contact.parent_rep_id",
+      "name": "Parent Rep ID",
+      "dataType": "TEXT",
+      "status": "create",
+      "note": "Which financing rep introduced this office. Without it you cannot tell which of the 300 reps is actually producing."
+    },
+    {
+      "group": "partner",
+      "model": "contact",
+      "key": "contact.partner_trained_date",
+      "name": "Partner Trained Date",
+      "dataType": "DATE",
+      "status": "create",
+      "note": "Gate for Signed & Trained. Signed without this date is not trained."
+    },
+    {
+      "group": "partner",
+      "model": "contact",
+      "key": "contact.partner_signed_date",
+      "name": "Partner Signed Date",
+      "dataType": "DATE",
+      "status": "create",
+      "note": "DATE replacement for contact.date_signed."
+    },
+    {
+      "group": "partner",
+      "model": "contact",
+      "key": "contact.partner_last_referral_date",
+      "name": "Partner Last Referral Date",
+      "dataType": "DATE",
+      "status": "create",
+      "note": "DATE replacement for contact.last_referral_date."
+    },
+    {
+      "group": "partner",
+      "model": "contact",
+      "key": "contact.partner_referral_count",
+      "name": "Partner Referral Count",
+      "dataType": "NUMERICAL",
+      "status": "create",
+      "note": "NUMERICAL replacement for contact.total_referrals."
+    },
+    {
+      "group": "partner",
+      "model": "contact",
+      "key": "contact.partner_referral_link",
+      "name": "Partner Referral Link",
+      "dataType": "TEXT",
+      "status": "create"
+    },
+    {
+      "group": "partner",
+      "model": "contact",
+      "key": "contact.partner_sms_keyword",
+      "name": "Partner SMS Keyword",
+      "dataType": "TEXT",
+      "status": "create"
+    },
+    {
+      "group": "partner",
+      "model": "contact",
+      "key": "contact.comp_structure",
+      "name": "Comp Structure",
+      "dataType": "SINGLE_OPTIONS",
+      "options": [
+        "Flat Monthly Marketing Fee",
+        "Per Enrollment",
+        "Percent of Collected",
+        "None (Relationship Only)",
+        "Pending Counsel Review"
+      ],
+      "status": "create",
+      "note": "Structure change is a field change, not a rebuild. scripts/comp_statement.py reads these labels."
+    },
+    {
+      "group": "partner",
+      "model": "contact",
+      "key": "contact.comp_rate",
+      "name": "Comp Rate",
+      "dataType": "NUMERICAL",
+      "status": "create",
+      "note": "Dollars per month (flat), dollars per enrollment, or a fraction like 0.10 (percent of collected). NUMERICAL, not MONETARY, so 0.10 is valid."
+    },
+    {
+      "group": "partner",
+      "model": "contact",
+      "key": "contact.agreement_version",
+      "name": "Agreement Version",
+      "dataType": "TEXT",
+      "status": "create"
+    },
+    {
+      "group": "partner",
+      "model": "contact",
+      "key": "contact.w9_on_file",
+      "name": "W9 On File",
+      "dataType": "CHECKBOX",
+      "options": [
+        "Yes"
+      ],
+      "status": "create",
+      "note": "No comp payment without it.",
+      "formLabel": "W-9 On File"
+    },
+    {
+      "group": "partner",
+      "model": "contact",
+      "key": "contact.partner_state",
+      "name": "Partner State",
+      "dataType": "TEXT",
+      "status": "create",
+      "note": "Drives which state's fee-splitting and brokering rules counsel reviewed."
+    },
+    {
+      "group": "attribution",
+      "model": "opportunity",
+      "key": "opportunity.referral_partner_id",
+      "name": "Referral Partner ID",
+      "dataType": "TEXT",
+      "status": "existing",
+      "id": "8bljJA5BXUO9ZQCZi0BS"
+    },
+    {
+      "group": "attribution",
+      "model": "opportunity",
+      "key": "opportunity.referral_representative",
+      "name": "Referral Representative",
+      "dataType": "TEXT",
+      "status": "existing",
+      "id": "9LP6nhA68vLn4RMrXwdO"
+    },
+    {
+      "group": "attribution",
+      "model": "opportunity",
+      "key": "opportunity.referral_office",
+      "name": "Referral Office",
+      "dataType": "TEXT",
+      "status": "existing",
+      "id": "zHS5Ui8Wigk0tpBG7sXu"
+    },
+    {
+      "group": "attribution",
+      "model": "opportunity",
+      "key": "opportunity.referrral_date",
+      "name": "Referrral Date",
+      "dataType": "TEXT",
+      "status": "existing",
+      "id": "Gs7Ugm9B7SvRSoUItKR2",
+      "note": "Typo in key is permanent. Fix the display name to 'Referral Date' in the UI. Also TEXT, not DATE."
+    },
+    {
+      "group": "attribution",
+      "model": "opportunity",
+      "key": "opportunity.referral_method",
+      "name": "Referral Method",
+      "dataType": "TEXT",
+      "status": "existing",
+      "id": "nKMZ9mKdk6O1i9cRgQRS",
+      "allowedValues": [
+        "link",
+        "qr",
+        "sms_keyword",
+        "office_dropdown",
+        "manual_rep_submit"
+      ]
+    },
+    {
+      "group": "attribution",
+      "model": "opportunity",
+      "key": "opportunity.declined_lender",
+      "name": "Declined Lender",
+      "dataType": "TEXT",
+      "status": "existing",
+      "id": "bhhlKhMO8puL4OPTx4mw"
+    },
+    {
+      "group": "attribution",
+      "model": "opportunity",
+      "key": "opportunity.decline_reason",
+      "name": "Decline Reason",
+      "dataType": "TEXT",
+      "status": "existing",
+      "id": "k8hT1gi42ylOKIYW37ew"
+    },
+    {
+      "group": "attribution",
+      "model": "opportunity",
+      "key": "opportunity.treatment_amount",
+      "name": "Treatment Amount",
+      "dataType": "TEXT",
+      "status": "existing",
+      "id": "kgqcsalJVIY3to54s2Fp",
+      "note": "TEXT. Cannot drive $-based routing or dashboards. Use opportunity monetaryValue or recreate as MONETARY."
+    },
+    {
+      "group": "attribution",
+      "model": "opportunity",
+      "key": "opportunity.traget_credit_score",
+      "name": "Traget Credit Score",
+      "dataType": "TEXT",
+      "status": "existing",
+      "id": "6Pyq5PFuQY541p71KUOC",
+      "note": "Typo in key is permanent. Rename display to 'Target Credit Score'."
+    },
+    {
+      "group": "attribution",
+      "model": "contact",
+      "key": "contact.ref_first_touch",
+      "name": "Ref First Touch",
+      "dataType": "TEXT",
+      "status": "create",
+      "note": "Permanent first-touch partner ID. Written by workflow only if empty. Never on a form."
+    },
+    {
+      "group": "attribution",
+      "model": "contact",
+      "key": "contact.ref_capture",
+      "name": "Ref Capture",
+      "dataType": "TEXT",
+      "status": "create",
+      "note": "Hidden form field. Set its Query Key to 'ref' so ?ref=CLRCH-DEN-014 pre-fills it. Overwritten on every submission; that is why it is not the source of truth."
+    },
+    {
+      "group": "attribution",
+      "model": "contact",
+      "key": "contact.ref_method_capture",
+      "name": "Ref Method Capture",
+      "dataType": "TEXT",
+      "status": "create",
+      "note": "Hidden field, Query Key 'src' (link|qr). Workflow copies to opportunity.referral_method."
+    },
+    {
+      "group": "attribution",
+      "model": "contact",
+      "key": "contact.office_dropdown",
+      "name": "Office Dropdown",
+      "dataType": "SINGLE_OPTIONS",
+      "options": [
+        "(maintained from partner registry)",
+        "Not referred by an office"
+      ],
+      "status": "create",
+      "note": "Fallback attribution on the public form. Options must be synced from the partner registry.",
+      "formLabel": "Which Office Sent You"
+    },
+    {
+      "group": "intake",
+      "model": "contact",
+      "key": "contact.treatment_amount_patient",
+      "name": "Treatment Amount Patient",
+      "dataType": "MONETARY",
+      "status": "create",
+      "note": "Collected from the patient, not the office. See HIPAA note in docs/04.",
+      "formLabel": "Treatment Amount (Patient Reported)"
+    },
+    {
+      "group": "intake",
+      "model": "contact",
+      "key": "contact.target_credit_score",
+      "name": "Target Credit Score",
+      "dataType": "NUMERICAL",
+      "status": "create"
+    },
+    {
+      "group": "intake",
+      "model": "contact",
+      "key": "contact.decline_lender_patient",
+      "name": "Decline Lender Patient",
+      "dataType": "SINGLE_OPTIONS",
+      "options": [
+        "CareCredit",
+        "Sunbit",
+        "Cherry",
+        "Proceed Finance",
+        "LendingClub Patient Solutions",
+        "Alphaeon",
+        "In-house plan",
+        "Other",
+        "Not sure"
+      ],
+      "status": "create",
+      "formLabel": "Declined By (Patient Reported)"
+    },
+    {
+      "group": "intake",
+      "model": "contact",
+      "key": "contact.patient_state",
+      "name": "Patient State",
+      "dataType": "TEXT",
+      "status": "create",
+      "note": "Credit-services registration/bond obligations follow where the CLIENT lives. Required before enrollment."
+    },
+    {
+      "group": "consent",
+      "model": "contact",
+      "key": "contact.sms_permission_status",
+      "name": "SMS Permission Status",
+      "dataType": "TEXT",
+      "status": "existing",
+      "id": "eIHbCGfylgJSRl0mhUPw"
+    },
+    {
+      "group": "consent",
+      "model": "contact",
+      "key": "contact.call_permission_status",
+      "name": "Call Permission Status",
+      "dataType": "TEXT",
+      "status": "existing",
+      "id": "WQU6578JYx8bR8LnX9rb"
+    },
+    {
+      "group": "consent",
+      "model": "contact",
+      "key": "contact.consent_datetime",
+      "name": "Consent Date/Time",
+      "dataType": "TEXT",
+      "status": "existing",
+      "id": "xWOfLgE4M4T1pllhkJyR"
+    },
+    {
+      "group": "consent",
+      "model": "contact",
+      "key": "contact.api_address",
+      "name": "API Address",
+      "dataType": "TEXT",
+      "status": "existing",
+      "id": "Ckcnm63XsNvD1J4eC4H5",
+      "note": "Almost certainly meant 'IP Address'. Rename the display name to 'Consent IP Address'. Key stays."
+    },
+    {
+      "group": "consent",
+      "model": "contact",
+      "key": "contact.capture_source",
+      "name": "Capture Source",
+      "dataType": "TEXT",
+      "status": "existing",
+      "id": "2ycA0PPC36Y0xUa2lCB7"
+    },
+    {
+      "group": "consent",
+      "model": "contact",
+      "key": "contact.consent_language_version",
+      "name": "Consent Language Version",
+      "dataType": "TEXT",
+      "status": "create",
+      "note": "Which exact consent wording the patient saw. When you change the form copy, bump the version. This is what wins a TCPA dispute."
+    },
+    {
+      "group": "consent",
+      "model": "contact",
+      "key": "contact.consent_confirmed_by_patient",
+      "name": "Consent Confirmed By Patient",
+      "dataType": "CHECKBOX",
+      "options": [
+        "Yes"
+      ],
+      "status": "create",
+      "note": "False on every manual_rep_submit until the patient completes the confirm form. Automated SMS is gated on this."
+    },
+    {
+      "group": "enrollment",
+      "model": "contact",
+      "key": "contact.enrollment_date",
+      "name": "Enrollment Date",
+      "dataType": "DATE",
+      "status": "create"
+    },
+    {
+      "group": "enrollment",
+      "model": "contact",
+      "key": "contact.cancellation_window_ends",
+      "name": "Cancellation Window Ends",
+      "dataType": "DATE",
+      "status": "create",
+      "note": "Enrollment date + 3 business days. No fulfillment file is built and no letter goes out before this."
+    },
+    {
+      "group": "enrollment",
+      "model": "contact",
+      "key": "contact.amount_collected",
+      "name": "Amount Collected",
+      "dataType": "MONETARY",
+      "status": "create",
+      "formLabel": "Amount Collected (Lifetime)"
+    },
+    {
+      "group": "enrollment",
+      "model": "contact",
+      "key": "contact.referral_comp_earned",
+      "name": "Referral Comp Earned",
+      "dataType": "MONETARY",
+      "status": "create",
+      "formLabel": "Referral Comp Earned (Lifetime)"
+    },
+    {
+      "group": "enrollment",
+      "model": "contact",
+      "key": "contact.client_outcome",
+      "name": "Client Outcome",
+      "dataType": "SINGLE_OPTIONS",
+      "options": [
+        "Approved",
+        "Improved, not yet approved",
+        "Closed, no result",
+        "Cancelled in 3-day window",
+        "Cancelled after start",
+        "Refunded"
+      ],
+      "status": "create"
+    },
+    {
+      "group": "enrollment",
+      "model": "contact",
+      "key": "contact.consult_attempts",
+      "name": "Consult Attempts",
+      "dataType": "NUMERICAL",
+      "status": "create",
+      "formLabel": "Follow-Up Attempts"
+    },
+    {
+      "group": "enrollment",
+      "model": "contact",
+      "key": "contact.client_service_stage",
+      "name": "Client Service Stage",
+      "dataType": "SINGLE_OPTIONS",
+      "options": [
+        "Onboarding",
+        "Round 1 Sent",
+        "Awaiting Bureau Response",
+        "Round 2+",
+        "Target Reached",
+        "Paused - Payment",
+        "Offboarded"
+      ],
+      "status": "create"
+    },
+    {
+      "group": "fulfillment",
+      "model": "contact",
+      "key": "contact.dispute_fox_client_id",
+      "name": "Dispute Fox Client ID",
+      "dataType": "TEXT",
+      "status": "existing",
+      "id": "eaVyivFI5s1iZa9fLPkt"
+    },
+    {
+      "group": "fulfillment",
+      "model": "contact",
+      "key": "contact.current_dispute_round",
+      "name": "Current Dispute Round",
+      "dataType": "TEXT",
+      "status": "existing",
+      "id": "bRii5QegzTpGVYOm7qSa",
+      "note": "Spec calls this round_number. Keep existing key; recreate as NUMERICAL if you want 'round >= 3' filters."
+    },
+    {
+      "group": "fulfillment",
+      "model": "contact",
+      "key": "contact.item_removed",
+      "name": "Item Removed",
+      "dataType": "TEXT",
+      "status": "existing",
+      "id": "csMsWk4QQXXQhn1ynzNi",
+      "note": "Spec calls this items_removed (a count). Recreate as NUMERICAL."
+    },
+    {
+      "group": "fulfillment",
+      "model": "contact",
+      "key": "contact.current_credit_score",
+      "name": "Current Credit Score",
+      "dataType": "TEXT",
+      "status": "existing",
+      "id": "InGbHDtQnDaJJYVM57JB"
+    },
+    {
+      "group": "fulfillment",
+      "model": "contact",
+      "key": "contact.reapplication_date",
+      "name": "Reapplication Date",
+      "dataType": "TEXT",
+      "status": "existing",
+      "id": "Vg6OMOkhXlKB6YynMGT2"
+    },
+    {
+      "group": "fulfillment",
+      "model": "contact",
+      "key": "contact.starting_credit_score",
+      "name": "Starting Credit Score",
+      "dataType": "NUMERICAL",
+      "status": "create",
+      "note": "Without a baseline, 'score movement' messages have nothing to compare to."
+    }
+  ],
+  "tags": {
+    "existing_keep": [
+      "partner-prospect",
+      "signed-partner",
+      "producing-partner",
+      "patient-referral",
+      "enrolled-client",
+      "consult-booked",
+      "manual-rep-submit",
+      "disputefox-synced",
+      "verify-state"
+    ],
+    "existing_fix": {
+      "dormat-partner": "dormant-partner (typo; workflows keyed to the wrong spelling fail silently)",
+      "linkedln": "merge into linkedin-lead"
+    },
+    "create": [
+      "partner-trained",
+      "referral-received",
+      "attribution-conflict",
+      "attribution-missing",
+      "consent-pending",
+      "no-show",
+      "payment-failed",
+      "score-moved",
+      "target-reached",
+      "nurture-30-60-90",
+      "counsel-hold",
+      "referral-counted",
+      "referral-before-signing",
+      "partner-opportunity-review"
+    ]
+  },
+  "calendars": {
+    "existing": {
+      "Schedule an Appointment": "9psZal11nhkYFHNtKbeG",
+      "Rebecca Jane's Personal Calendar": "kAxHp26kXHccW8IHwQ5k",
+      "Nico Carpon's Personal Calendar": "XIHxNxezFNM8OsXPAsRc"
+    },
+    "create": [
+      {
+        "name": "Partner Intro Call",
+        "owner": "Kate",
+        "duration_min": 20,
+        "buffer_min": 10,
+        "note": "20 minutes, not 30. Office managers take 20 between patients; 30 gets rescheduled."
+      },
+      {
+        "name": "Partner Training (Screen Share)",
+        "owner": "Kate",
+        "duration_min": 15,
+        "buffer_min": 5
+      },
+      {
+        "name": "Patient Credit Consult",
+        "type": "round robin",
+        "members": [
+          "Twin",
+          "Kate"
+        ],
+        "duration_min": 30,
+        "buffer_min": 15,
+        "note": "Offer evening and Saturday slots. Declined dental patients work day jobs; a 9-5 consult calendar is the no-show generator."
+      }
+    ]
+  }
+}
