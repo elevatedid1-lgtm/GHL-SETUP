@@ -59,6 +59,8 @@ class GHL:
         return self.request("GET", path, query={"model": "all"}).get("customFields", [])
 
     def create_custom_field(self, name, data_type, model, options=None):
+        # GHL spells the money type "MONETORY"; accept either spelling in the schema.
+        data_type = "MONETORY" if data_type == "MONETARY" else data_type
         body = {"name": name, "dataType": data_type, "model": model}
         if options:
             body["options"] = options

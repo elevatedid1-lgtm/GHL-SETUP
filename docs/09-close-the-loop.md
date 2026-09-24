@@ -13,7 +13,7 @@ Most referral programs skip this step, and it's the one that turns one rep into 
 3. **Only on the patient's yes** (reply or button): notify the referring partner. "Maria is ready to reapply. She asked us to let you know." First name only, plus the fact that she's ready. Never the score or the items.
    - Why the yes matters: the patient's credit situation is the patient's information. Telling the office without asking, even with good news, is a breach of trust at minimum. Your enrollment contract should have an opt-in for this (counsel item). Even so, asking in the moment is the right move.
 4. Task to Kate: call the coordinator within 1 business day. "Did she get scheduled?"
-5. Set `contact.reapplication_date` when the office confirms.
+5. Set `contact.reapply_date` when the office confirms.
 
 ## Log the outcome honestly
 

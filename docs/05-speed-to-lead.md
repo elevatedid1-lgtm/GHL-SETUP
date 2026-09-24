@@ -10,8 +10,8 @@ This person was told "no" in a dental chair an hour ago, often in front of a coo
 
 | When | Channel | Action |
 |---|---|---|
-| 0 min | SMS | Instant text with the consult link (copy in `templates/patient-messages.md`). |
-| 0 min | Email | Same message, plus what to expect on the consult. |
+| 0 min | SMS | Instant text with the consult link, `{{custom_values.consult_booking_link}}` (copy in `templates/patient-messages.md`). |
+| 0 min | Email | Email template **B2 · Speed to lead · 0 min** (already in GHL). |
 | 0 min | Task / call | **Call connect**: GHL rings the assigned user, and when they pick up, it dials the patient. If you're not using call connect, create a task due in 5 minutes and assign by round robin (Kate / Rebecca). |
 | 5 min | SMS | Only if not booked **and no reply**: "Tried calling. Here's the link again, or reply with a good time." |
 | 1 hr | Call task | Second call attempt. |

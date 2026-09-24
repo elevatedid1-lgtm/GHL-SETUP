@@ -40,10 +40,10 @@ A human voice at day 45 is worth more than all the automated messages combined.
 
 ## `R4 · Score moved`
 
-**Trigger:** `current_credit_score` or `item_removed` changed.
+**Trigger:** `contact.current_score` or `contact.items_removed` changed.
 - Any removal or any score increase → "Here's what changed" SMS, even when it's small. "+6 points" is news to someone who hasn't had good credit news in years.
 - A score decrease → **no automated message**. Task for Rebecca: call and explain it (new inquiry, a utilization spike, a dispute notation). An automated "your score changed!" text on a drop is the worst message in this business.
-- `current_credit_score ≥ target_credit_score` → tag `target-reached` → doc 09.
+- `current_score ≥ target_credit_score` → tag `target-reached` → doc 09.
 
 ## Retention numbers to watch (scorecard)
 

@@ -4,24 +4,24 @@
 
 ## Fields set at creation and never left blank
 
-Real keys are in `config/ghl-schema.json`. Keys marked † are existing fields whose keys are misspelled permanently.
+Real keys and IDs are in `config/ghl-schema.json`. All of these exist in GHL as of 2026-09-24. Fields named `OLD - …` in GHL are retired: don't map forms or workflows to them.
 
 | Spec name | GHL key | Set by |
 |---|---|---|
 | referral_partner_id | `contact.ref_first_touch` → `opportunity.referral_partner_id` | Workflow `B1` (first touch) |
 | referral_office | `opportunity.referral_office` | `B1`, looked up from the partner |
 | referral_rep | `opportunity.referral_representative` | `B1`, from the `parent_rep_id` prefix |
-| referral_date | `opportunity.referrral_date` † | `B1` = submission date |
+| referral_date | `opportunity.referral_date` (DATE) | `B1` = submission date |
 | referral method | `opportunity.referral_method` | `link` / `qr` / `sms_keyword` / `office_dropdown` / `manual_rep_submit` |
 | decline_lender | `contact.decline_lender_patient` → `opportunity.declined_lender` | Patient, on the form |
 | decline_reason | `opportunity.decline_reason` | Patient ("I don't know" is allowed) |
 | treatment_amount | `contact.treatment_amount_patient` → opportunity **Monetary Value** | Patient |
-| target_score | `contact.target_credit_score` → `opportunity.traget_credit_score` † | Consult (the patient rarely knows it) |
+| target_score | `contact.target_credit_score` → `opportunity.target_score` (both NUMERICAL) | Consult (the patient rarely knows it) |
 | patient state | `contact.patient_state` | Patient, on the form. **Required.** |
 | consent_sms / consent_call | `contact.sms_permission_status`, `contact.call_permission_status` | Form checkbox |
 | consent_timestamp | `contact.consent_datetime` | Workflow = submission timestamp |
-| consent_ip | `contact.api_address` † | Form hidden IP field (GHL records the submission IP; copy it) |
-| consent language version | `contact.consent_language_version` | Hidden field, constant per form version |
+| consent_ip | `contact.consent_ip` | Form hidden IP field (GHL records the submission IP; copy it) |
+| consent language version | `contact.consent_language_version` | Hidden field, set from custom value `{{custom_values.consent_language_version}}` (currently `v2026-10-a`) |
 
 **Put treatment amount in the opportunity's Monetary Value,** not only in a custom field. Pipeline value totals, the funnel report, and the opportunity card sort all run on Monetary Value, so you get "$ of declined treatment in the pipeline" for free. That number sells the next 300 reps.
 

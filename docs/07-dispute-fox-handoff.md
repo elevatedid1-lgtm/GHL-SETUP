@@ -9,7 +9,7 @@
 | Who | The person: name, phone, email, address, consent, DND | A copy of identity data needed for letters (set once at handoff) |
 | Money | Contract, disclosures, payment method, billing, failed payments, refunds, referral comp | Nothing |
 | Conversation | Every SMS, email, call, and note with the client, the partner, and the rep | Nothing client-facing. Hammock's team doesn't message clients directly. |
-| The file | Only 3 mirrored numbers: `current_dispute_round`, `item_removed`, `current_credit_score` | Report import, audit, items, letters, rounds, bureau responses, secondary-bureau sweeps |
+| The file | Only 3 mirrored numbers: `round_number`, `items_removed`, `current_score` (NUMERICAL) | Report import, audit, items, letters, rounds, bureau responses, secondary-bureau sweeps |
 | Pipeline | Stage, outcome, service stage | Its own client status |
 
 **If a piece of data is in the wrong column, it gets deleted from that system, not maintained in both.** Two CRMs holding overlapping client data always drift apart. You find out the day a client says "your other person told me something different."
@@ -42,7 +42,7 @@ Link by ID, not name: `dispute_fox_client_id` goes on the GHL contact. "Maria Lo
 
 IDIQ pull → report import → audit → round 1 built. Hammock's team runs the rounds and secondary-bureau sweeps (LexisNexis, Innovis, SageStream and similar) with their own letters. LetterStream mails.
 
-**Only three things come back into GHL:** `current_dispute_round`, `item_removed` (count), and `current_credit_score`. The mechanism, in order of preference:
+**Only three things come back into GHL:** `contact.round_number`, `contact.items_removed`, and `contact.current_score`, all NUMERICAL. The mechanism, in order of preference:
 1. A Dispute Fox webhook or Zapier trigger on round completion → GHL inbound webhook workflow updates the 3 fields.
 2. A weekly CSV export from Dispute Fox → import into GHL by `dispute_fox_client_id`.
 3. Hammock's team updates the 3 fields directly in GHL. Give them a restricted GHL user that can edit those fields and nothing else.

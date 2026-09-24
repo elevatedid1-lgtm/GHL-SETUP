@@ -1,6 +1,25 @@
 # Live account audit: what's already in GHL
 
-Read-only pull of sub-account `Evfk5CgjxNHryw79uGDD` on 2026-09-24. Nothing was changed.
+Read-only pull of sub-account `Evfk5CgjxNHryw79uGDD` on 2026-09-24, followed the same day by the fixes in the next section.
+
+## Applied on 2026-09-24
+
+| Fix | Status |
+|---|---|
+| 38 typed custom fields created (DATE / NUMERICAL / MONETORY / dropdowns), keys match `config/ghl-schema.json` | ✅ Done, verified by re-reading the live field list |
+| 11 TEXT or typo'd fields replaced and renamed `OLD - …`. Keys unchanged; nothing deleted. | ✅ Done. Delete them in Settings → Custom Fields once you've confirmed nothing uses them. |
+| Tag `dormat-partner` renamed to `dormant-partner`; contacts carrying it keep it | ✅ Done |
+| Duplicate tag `linkedln` deleted (0 contacts had it) | ✅ Done |
+| 14 lifecycle and attribution tags created | ✅ Done |
+| Calendar **Patient Credit Consult**: round robin, Clifford (Twin); Mon–Fri 10–8, Sat 9–2; 30 min + 15 min buffer; 2-hour minimum notice | ✅ Done: `https://api.leadconnectorhq.com/widget/booking/xjCUn38pxxI23KIDhTok` |
+| Custom values `consult_booking_link` and `consent_language_version` (`v2026-10-a`) | ✅ Done |
+| Email templates: B2 speed-to-lead, P3 partner kit, P5 dormant day 7, R1 monthly update | ✅ Done (not attached to any workflow yet, so nothing sends) |
+| Assign the 148 partner prospects to Kate | ⏸ Skipped for now: Kate isn't a GHL user yet |
+| Partner Intro Call and Partner Training calendars | ⏸ Skipped for now: owner is Kate |
+| Forms, workflows, Documents & Contracts templates | ❌ GHL's public API can't create these. Build them in the UI from docs 02–09. |
+| Delete the 6 snapshot draft workflows | Left alone. They're drafts, so they never fire. |
+
+## Original findings
 
 ## What's already right
 

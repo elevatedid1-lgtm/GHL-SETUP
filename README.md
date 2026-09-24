@@ -30,13 +30,13 @@ Two pipelines, one hinge:
 ## Build order
 
 1. **Counsel (doc 12), started now, in parallel.** Nothing below waits on it except **paying partners** and **charging clients**. Start the high-risk merchant account application at the same time.
-2. **Fix the account (doc 00).** Assign the 148 prospects to Kate, fix tag typos, rename field display names, then provision fields:
+2. **Fix the account (doc 00).** ✅ Applied 2026-09-24: fields, tags, consult calendar, custom values, email templates. Still open: add Kate as a user, assign the 148 prospects to her, and create her two partner calendars. To re-check the fields later:
    ```
    export GHL_TOKEN=pit-...            # Settings → Private Integrations
    python3 scripts/provision_fields.py          # dry run: shows what it would create
    python3 scripts/provision_fields.py --apply
    ```
-3. **Calendars and forms** (docs 04, 05).
+3. **Forms** (doc 04): Patient Intake, Rep Submit, Confirm Your Info. On **Ref Capture** set Query Key `ref`, and on **Ref Method Capture** set `src`.
 4. **Workflows** in this order: B1 → B2 → B3/B4 → P1–P5 → B5/B6 → F1/F2 → R1–R4 → L1. Build them in the UI; GHL's API can't create workflows.
 5. **Deploy the sync service** (`service/referral_sync.py`) as a serverless function (AWS Lambda handler included), and point B1's webhook at it. This is the piece that moves a partner to Producing and resets dormancy. GHL workflows can't update a *different* contact on their own.
 6. **Test end-to-end** with one internal "partner" and one internal "patient" before the first real office.
