@@ -807,7 +807,10 @@
       "id": "RayQTbHya4kaDCc2ylYX",
       "status": "partial draft: name, first/last/phone required, Patient State added, default T&C removed. Email, lender, amount, office dropdown, hidden fields, both consent checkboxes and submit message still to add."
     },
-    "Rep Submit": "not built",
-    "Confirm Your Info": "not built"
+    "Rep Submit": {
+      "id": "mZnZk1g7wp7hulf1smeR",
+      "status": "partial draft: named; default consent, Last Name, Email removed; has First Name + Phone(required). Remaining: labels, Ref Capture hidden (query key ref), 'Your partner ID', 'Best time to call', required permission checkbox."
+    },
+    "Confirm Your Info": "not built: duplicate Patient Intake AFTER it is finished, then remove Office Dropdown"
   }
 }
