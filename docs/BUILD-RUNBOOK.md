@@ -107,6 +107,25 @@ Save each one as **Draft**. Names must match exactly. Full logic is in the linke
 
 Pipeline and stage IDs are in `config/ghl-schema.json → pipelines`.
 
+### B1 as actually specified (split into B1a / B1b, 2026-09-25)
+
+**`B1a · Patient intake → opportunity`**. Triggers: Form Submitted = Patient Intake; Form Submitted = Confirm Your Info.
+1. If/Else **Consent given?**: `SMS Permission` not empty **OR** `Call Permission` not empty → Consent Confirmed By Patient = Yes; Consent Date/Time = *Right Now → Date* + space + *Right Now → Time*. None branch: write nothing.
+2. If/Else **Has partner ID?**: Ref First Touch empty AND Ref Capture not empty → Ref First Touch = `{{contact.ref_capture}}`.
+3. Add Tag `patient-referral`.
+4. Create/Update Opportunity: Patient Pipeline / New Referral, name `{{contact.name}}`, value `{{contact.treatment_amount_patient}}`, no duplicates; Referral Partner ID = `{{contact.ref_first_touch}}` if opportunity fields are offered.
+5. If/Else **Missing attribution?**: Ref First Touch empty **AND Office Dropdown is not empty** AND Office Dropdown is not "Not referred by an office" → tag `attribution-missing` + task (1 day). *(The "not empty" check stops every Confirm Your Info submission, which has no office question, from being flagged.)*
+6. If/Else **OK to text?**: `SMS Permission` not empty → speed-to-lead task (5 min; later: add to B2). None → call-only task.
+
+**`B1b · Rep submit → call only`**. Trigger: Form Submitted = Rep Submit.
+1. Tags `manual-rep-submit`, `consent-pending`, `patient-referral`.
+2. If/Else: (Ref First Touch empty AND Ref Capture not empty → copy Ref Capture) / (Ref First Touch empty AND `Your partner ID` not empty → copy `{{contact.your_partner_id}}`).
+3. Create/Update Opportunity (same as B1a step 4).
+4. Task: call by hand in 5 min; no texts; send the Confirm Your Info link manually if they're interested.
+**No SMS or email step, and consent is never set here.**
+
+Field-picker gotchas: pick **SMS Permission** / **Call Permission**, not the `OLD - … (text)` fields. The rep attestation checkbox is labeled **Rep Attests Patient Permission**, but its key is `contact.required` (auto-named by the builder).
+
 ## Phase 4: Documents & Contracts (after counsel)
 
 - [ ] `Partner Referral Agreement`: merge fields for office, `{{contact.partner_id}}`, `{{contact.comp_structure}}`, `{{contact.comp_rate}}`. Compensation reads "per Schedule A" until counsel approves.
