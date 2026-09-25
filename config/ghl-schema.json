@@ -805,12 +805,15 @@
   "forms": {
     "Patient Intake": {
       "id": "RayQTbHya4kaDCc2ylYX",
-      "status": "partial draft: name, first/last/phone required, Patient State added, default T&C removed. Email, lender, amount, office dropdown, hidden fields, both consent checkboxes and submit message still to add."
+      "status": "built by owner 2026-09-25"
     },
     "Rep Submit": {
       "id": "mZnZk1g7wp7hulf1smeR",
-      "status": "partial draft: named; default consent, Last Name, Email removed; has First Name + Phone(required). Remaining: labels, Ref Capture hidden (query key ref), 'Your partner ID', 'Best time to call', required permission checkbox."
+      "status": "built by owner 2026-09-25"
     },
-    "Confirm Your Info": "not built: duplicate Patient Intake AFTER it is finished, then remove Office Dropdown"
+    "Confirm Your Info": {
+      "id": "CrLVmgmNPoK3Wn1ZFsLD",
+      "status": "built by owner 2026-09-25 (duplicate of Patient Intake minus Office Dropdown)"
+    }
   }
 }

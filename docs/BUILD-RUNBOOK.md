@@ -51,7 +51,7 @@ Fields, in order (★ = required):
 
 Form settings: on submit, show message "Thanks. Someone from our team will reach out shortly. Check your texts." Turn **off** any "Terms & conditions" element the builder adds by default.
 
-- [ ] Form 1 built. Form ID: `RayQTbHya4kaDCc2ylYX` (partial draft; see `config/ghl-schema.json → forms`)
+- [x] Form 1 built. Form ID: `RayQTbHya4kaDCc2ylYX`
 
 > **Builder tips (learned the hard way):** GHL's form builder runs inside an embedded frame. Dragging freezes it for automation, so add elements with the **"+" insert buttons** and save after every 2–3 fields. The "Terms & Conditions" element was removed. **The form must not go live until the two consent checkboxes above are added back.**
 
@@ -66,11 +66,11 @@ Form settings: on submit, show message "Thanks. Someone from our team will reach
 | 6 | Checkbox ★ | "The patient asked me to share their name and number with Elevated Identities." |
 
 No treatment, lender or amount fields. **That's deliberate** (HIPAA, doc 04).
-- [ ] Form 2 built. Form ID: `__________`
+- [x] Form 2 built. Form ID: `mZnZk1g7wp7hulf1smeR`
 
 ### Form 3: `Confirm Your Info`
 A copy of Form 1 without the office dropdown. Fields pre-fill from the contact.
-- [ ] Form 3 built. Form ID: `__________`
+- [x] Form 3 built. Form ID: `CrLVmgmNPoK3Wn1ZFsLD`
 
 ## Phase 2: funnel page
 
