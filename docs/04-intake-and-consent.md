@@ -72,7 +72,7 @@ Tell partners this in training in one sentence: "Don't send us anything about th
 ## Workflow `B1 · Intake → opportunity`
 
 - **Triggers:** Form submitted = Patient Intake; Form submitted = Confirm Your Info; Form submitted = Rep Submit.
-- Set the consent fields (timestamp = now, IP, version). If the form is Intake or Confirm, set `consent_confirmed_by_patient = Yes`.
+- Consent fields: **only if** the patient ticked the SMS or the call box (If/Else), set `consent_confirmed_by_patient = Yes` and the consent timestamp. If neither box is ticked, write nothing: an unticked submission is an inquiry, not consent. A person may still call them back by hand; automation may not text or auto-dial them. (Built as `B1a` for Patient Intake / Confirm Your Info and `B1b` for Rep Submit. `B1b` never sets consent.)
 - First-touch attribution: if `ref_first_touch` is empty and `ref_capture` isn't empty, copy it. If `ref_capture` is empty and the office dropdown is set, copy the dropdown's partner ID and set method = `office_dropdown`. If there's a conflict → `attribution-conflict` tag and a task.
 - **Create/Update Opportunity** in the Patient Pipeline, stage New Referral, Monetary Value = treatment amount. Copy the attribution fields onto the opportunity.
 - If `ref_first_touch` isn't empty → **Webhook** POST to the sync service: `{"patient_contact_id": "{{contact.id}}", "partner_id": "{{contact.ref_first_touch}}"}`. That moves the partner to Producing and resets their dormancy timer.
