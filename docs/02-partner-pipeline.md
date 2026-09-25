@@ -71,7 +71,7 @@ This is the standard GHL pattern for "N days with no event," because there's no 
 - Remove the tag, so the next referral can add it again.
 - **Remove from workflow** `P4`, then **Add to workflow** `P4`. This restarts the 30-day clock.
 - Remove from `P5` if present.
-- SMS to the partner: "Got {{patient first name}}, reaching out now. Thank you." Only if `contact.sms_permission_status` = granted.
+- SMS to the partner: "Got {{patient first name}}, reaching out now. Thank you." Only if `contact.sms_permission` is ticked.
   - Put first name only in the message, never a last name or a reason. That's a privacy habit worth keeping even where no law requires it.
 
 ### `P5 · Dormant re-engagement`

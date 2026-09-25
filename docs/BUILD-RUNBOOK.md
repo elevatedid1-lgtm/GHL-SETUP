@@ -40,8 +40,8 @@ Fields, in order (★ = required):
 | 9 | Hidden | custom `Ref Capture` | Pre-fills from `?ref=` |
 | 10 | Hidden | custom `Ref Method Capture` | Pre-fills from `?src=` |
 | 11 | Hidden | custom `Consent Language Version` | Default value `{{custom_values.consent_language_version}}` |
-| 12 | Checkbox (**not** pre-checked, **not** required) | custom `SMS Permission Status` | Text below, "SMS consent" |
-| 13 | Checkbox (**not** pre-checked, **not** required) | custom `Call Permission Status` | Text below, "Call consent" |
+| 12 | Checkbox (**not** pre-checked, **not** required) | custom `SMS Permission` (checkbox) | Text below, "SMS consent" |
+| 13 | Checkbox (**not** pre-checked, **not** required) | custom `Call Permission` (checkbox) | Text below, "Call consent" |
 
 **SMS consent** (verbatim; counsel approves before go-live):
 > I agree Elevated Identities may text me at the number above about my inquiry, including automated messages. Msg & data rates may apply; frequency varies. Reply STOP to opt out, HELP for help. Consent is not required to receive services.
@@ -86,7 +86,7 @@ Save each one as **Draft**. Names must match exactly. Full logic is in the linke
 | Order | Workflow | Trigger(s) | Key actions | Doc |
 |---|---|---|---|---|
 | 1 | `B1 · Intake → opportunity` | Form submitted: Patient Intake / Rep Submit / Confirm Your Info | Set consent fields (timestamp = `{{right_now}}`, IP → `Consent IP`). If/else on `Ref First Touch` empty → copy `Ref Capture`. Create/Update Opportunity: **Patient Pipeline** (`J1HkoDLINqtOIovNPs46`), stage **New Referral**, Monetary Value = `{{contact.treatment_amount_patient}}`; copy the partner ID and today → `Referral Date`. Webhook → sync service (URL TBD, leave a placeholder). Branch: tag `manual-rep-submit` → call task only; else → add to B2. | 04 |
-| 2 | `B2 · Speed to lead` | Added by B1 only | Guard: `Consent Confirmed By Patient` = Yes AND `SMS Permission Status` is not empty. SMS + email template **B2 · Speed to lead · 0 min** + call task (5 min). Then 5 min / 1 h / 24 h / day 3 / day 5 / day 8 per doc. Goal: appointment booked on **Patient Credit Consult** (`xjCUn38pxxI23KIDhTok`). Day 8 → stage Nurture + tag `nurture-30-60-90`. | 05 |
+| 2 | `B2 · Speed to lead` | Added by B1 only | Guard: `Consent Confirmed By Patient` = Yes AND `SMS Permission` is not empty. SMS + email template **B2 · Speed to lead · 0 min** + call task (5 min). Then 5 min / 1 h / 24 h / day 3 / day 5 / day 8 per doc. Goal: appointment booked on **Patient Credit Consult** (`xjCUn38pxxI23KIDhTok`). Day 8 → stage Nurture + tag `nurture-30-60-90`. | 05 |
 | 3 | `B3 · Consult booked` | Appointment booked, calendar Patient Credit Consult | Stage Consult Booked, tag `consult-booked`, confirmation, reminders at 24 h and 1 h, task "send personal 2-h text". | 05 |
 | 4 | `B4 · No-show` | Appointment status = No-show | Tag `no-show`, stage Contacted, +10 min SMS, same-day call task. | 05 |
 | 5 | `P1 · Partner intro call booked` | Appointment booked, calendar Partner Intro Call (**create after Kate is added**) | Stage Intro Call Booked, reminders, "paste notes" task. | 02 |

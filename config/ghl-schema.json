@@ -442,19 +442,21 @@
       "group": "consent",
       "model": "contact",
       "key": "contact.sms_permission_status",
-      "name": "SMS Permission Status",
+      "name": "OLD - SMS Permission Status (text)",
       "dataType": "TEXT",
-      "status": "existing",
-      "id": "eIHbCGfylgJSRl0mhUPw"
+      "status": "deprecated",
+      "id": "eIHbCGfylgJSRl0mhUPw",
+      "replacedBy": "contact.sms_permission"
     },
     {
       "group": "consent",
       "model": "contact",
       "key": "contact.call_permission_status",
-      "name": "Call Permission Status",
+      "name": "OLD - Call Permission Status (text)",
       "dataType": "TEXT",
-      "status": "existing",
-      "id": "WQU6578JYx8bR8LnX9rb"
+      "status": "deprecated",
+      "id": "WQU6578JYx8bR8LnX9rb",
+      "replacedBy": "contact.call_permission"
     },
     {
       "group": "consent",
@@ -722,6 +724,56 @@
       "status": "existing",
       "note": "Replaces TEXT contact.reapplication_date.",
       "id": "INar1zqPQ6IEiHJG13Wv"
+    },
+    {
+      "group": "consent",
+      "model": "contact",
+      "key": "contact.sms_permission",
+      "name": "SMS Permission",
+      "dataType": "CHECKBOX",
+      "status": "existing",
+      "id": "oNQBTuspWvjb5ruvePtR",
+      "note": "Created by the Patient Intake form builder. The TCPA text-consent box. Not empty = ticked."
+    },
+    {
+      "group": "consent",
+      "model": "contact",
+      "key": "contact.call_permission",
+      "name": "Call Permission",
+      "dataType": "CHECKBOX",
+      "status": "existing",
+      "id": "kRWgJQ61evXgh2rxcfOa",
+      "note": "Created by the form builder. Call-consent box."
+    },
+    {
+      "group": "attribution",
+      "model": "contact",
+      "key": "contact.your_partner_id",
+      "name": "Your partner ID",
+      "dataType": "TEXT",
+      "status": "existing",
+      "id": "rYN3AoZaG67qZF1fIuoU",
+      "note": "Rep Submit form: the rep types their partner ID here. B1b copies it to ref_first_touch when ref_capture is empty."
+    },
+    {
+      "group": "attribution",
+      "model": "contact",
+      "key": "contact.best_time_to_call",
+      "name": "Best time to call",
+      "dataType": "TEXT",
+      "status": "existing",
+      "id": "BR27A73oDuxGKbf1X5yc",
+      "note": "Rep Submit form."
+    },
+    {
+      "group": "attribution",
+      "model": "contact",
+      "key": "contact.required",
+      "name": "Rep Attests Patient Permission",
+      "dataType": "CHECKBOX",
+      "status": "existing",
+      "id": "oLbmlcmmPwqh2AjasRD1",
+      "note": "Rep Submit attestation. Key is 'contact.required' (auto-named by the builder; renamed display only)."
     }
   ],
   "tags": {

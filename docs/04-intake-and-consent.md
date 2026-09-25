@@ -18,7 +18,7 @@ Real keys and IDs are in `config/ghl-schema.json`. All of these exist in GHL as 
 | treatment_amount | `contact.treatment_amount_patient` → opportunity **Monetary Value** | Patient |
 | target_score | `contact.target_credit_score` → `opportunity.target_score` (both NUMERICAL) | Consult (the patient rarely knows it) |
 | patient state | `contact.patient_state` | Patient, on the form. **Required.** |
-| consent_sms / consent_call | `contact.sms_permission_status`, `contact.call_permission_status` | Form checkbox |
+| consent_sms / consent_call | `contact.sms_permission`, `contact.call_permission` (checkboxes) | Form checkbox |
 | consent_timestamp | `contact.consent_datetime` | Workflow = submission timestamp |
 | consent_ip | `contact.consent_ip` | Form hidden IP field (GHL records the submission IP; copy it) |
 | consent language version | `contact.consent_language_version` | Hidden field, set from custom value `{{custom_values.consent_language_version}}` (currently `v2026-10-a`) |
@@ -54,7 +54,7 @@ A rep handing you a phone number is **not** consent to text or auto-dial that nu
 
 1. `manual-rep-submit` contacts **don't enter** `B2` (the automated speed-to-lead sequence). They get a **call task** at 5 minutes. The call is placed by hand, not with a power dialer.
 2. `consent_confirmed_by_patient` is set only when **the patient** submits Form 1 or Form 3.
-3. Every automated SMS or call step in every workflow checks: `sms_permission_status = granted AND consent_confirmed_by_patient = Yes`. Put the check in the step itself, not only at the top of the workflow. People reuse workflows.
+3. Every automated SMS or call step in every workflow checks: `sms_permission` (checkbox) ticked AND `consent_confirmed_by_patient = Yes`. Put the check in the step itself, not only at the top of the workflow. People reuse workflows.
 4. STOP is honored across every number and every workflow. GHL's DND does this per channel. Check that DND-SMS is set when STOP comes in, before launch.
 5. Many states have their own texting laws stricter than federal (Florida, Oklahoma, Maryland and others). Consent from the patient's own submission is what covers you everywhere.
 

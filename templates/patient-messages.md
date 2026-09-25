@@ -1,6 +1,6 @@
 # Patient messages
 
-Tone rules: no exclamation points in the first message, no "Congratulations!", no urgency language ("limited spots"). This person is embarrassed and wary. Sound like a person, not a campaign. Every automated SMS is sent only when `sms_permission_status = granted` and `consent_confirmed_by_patient = Yes`.
+Tone rules: no exclamation points in the first message, no "Congratulations!", no urgency language ("limited spots"). This person is embarrassed and wary. Sound like a person, not a campaign. Every automated SMS is sent only when `sms_permission` is ticked and `consent_confirmed_by_patient = Yes`.
 
 ## B2 · Speed to lead
 
